@@ -1,0 +1,21 @@
+'context-menu':
+  'atom-text-editor': [
+    {
+      'label': 'Toggle WindowFold'
+      'command': 'window-fold:toggle'
+    }
+  ]
+'menu': [
+  {
+    'label': 'Packages'
+    'submenu': [
+      'label': 'WindowFold'
+      'submenu': [
+        {
+          'label': 'Toggle'
+          'command': 'window-fold:toggle'
+        }
+      ]
+    ]
+  }
+]
