@@ -29,17 +29,17 @@ module.exports = WindowFold =
       windowBox = getWindowBox()
 
       # x,y of element in screen coordinates (w/o border)
-      posAbsOld = addPos @origWindowBox, @origElementBox
-      posAbsCur = addPos windowBox, elementBox
+      posAbsOld = add @origWindowBox, @origElementBox
+      posAbsCur = add windowBox, elementBox
 
-      posDelta = subPos posAbsOld, posAbsCur
-      sizeDelta = subSize @origElementBox, elementBox
+      posDelta = sub posAbsOld, posAbsCur
+      sizeDelta = sizeDiff @origElementBox, elementBox
 
-      unless posDelta.isZero() and sizeDelta.isZero()
+      unless isZero(posDelta) and isZero(sizeDelta)
         console.log "need to move window by #{util.inspect posDelta}"
-        windowBox.move posDelta
+        move windowBox, posDelta
         console.log "need to resize window by #{util.inspect sizeDelta}"
-        windowBox.resize sizeDelta
+        resize windowBox, sizeDelta
 
         atom.setPosition windowBox.x, windowBox.y
         atom.setSize windowBox.width, windowBox.height
@@ -56,44 +56,39 @@ getElementBox = (element) ->
     y += el.offsetTop
     root = el unless el.parentElement
     el = el.parentElement
-  new Box x, y, element.offsetWidth, element.offsetHeight
+  {x, y, width: element.offsetWidth, height: element.offsetHeight}
 
 getWindowBox = ->
   pos = atom.getPosition()
   size = atom.getSize()
-  new Box pos.x, pos.y, size.width, size.height
+  {x: pos.x, y: pos.y, width: size.width, height: size.height}
 
-addPos = (a, b) ->
-  new Vec a.x + b.x, a.y + b.y
+# vector operations on {x, y}
 
-subPos = (a, b) ->
-  new Vec a.x - b.x, a.y - b.y
+add = (a, b) ->
+  x = a.x + b.x
+  y = a.y + b.y
+  {x, y}
 
-subSize = (a, b) ->
-  new Vec a.width - b.width, a.height - b.height
+sub = (a, b) ->
+  x = a.x - b.x
+  y = a.y - b.y
+  {x, y}
 
-class Vec
-  constructor: (@x, @y) ->
+isZero = (vec) ->
+  vec.x == 0 and vec.y == 0
 
-  isZero: ->
-    @x == 0 && @y == 0
+move = (vec, delta) ->
+  vec.x += delta.x
+  vec.y += delta.y
 
-  equals: (other) ->
-    @x == other.x && @y == other.y
+# size operations on {width, height}
 
-class Box
-  constructor: (@x, @y, @width, @height) ->
+sizeDiff = (a, b) ->
+  x = a.width - b.width
+  y = a.height - b.height
+  {x, y}
 
-  move: (delta) ->
-    @x += delta.x
-    @y += delta.y
-
-  resize: (delta) ->
-    @width += delta.x
-    @height += delta.y
-
-  equals: (other) ->
-    @x == other.x &&
-      @y == other.y &&
-      @width == other.width &&
-      @height == other.height
+resize = (vec, delta) ->
+  vec.width += delta.x
+  vec.height += delta.y
