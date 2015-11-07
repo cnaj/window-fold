@@ -5,7 +5,7 @@ WindowFold = require '../lib/window-fold'
 # To run a specific `it` or `describe` block add an `f` to the front (e.g. `fit`
 # or `fdescribe`). Remove the `f` to unfocus the block.
 
-describe "WindowFold", ->
+xdescribe "WindowFold", ->
   [workspaceElement, activationPromise] = []
 
   beforeEach ->

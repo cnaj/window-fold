@@ -27,10 +27,11 @@ module.exports = WindowFold =
       console.log "activate WindowFold"
       @calc = new FoldCalculator elementDim, windowDim
     else
-      if @calc.calcDimensions elementDim, windowDim
-        console.log "move window to #{util.inspect windowDim}"
-        atom.setPosition windowDim.x, windowDim.y
-        atom.setSize windowDim.width, windowDim.height
+      newDim = @calc.calcDimensions elementDim, windowDim
+      if newDim
+        console.log "move window to #{util.inspect newDim}"
+        atom.setPosition newDim.x, newDim.y
+        atom.setSize newDim.width, newDim.height
       else
         console.log "deactivate WindowFold"
         @calc = null
