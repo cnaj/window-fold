@@ -77,5 +77,19 @@ describe "FoldCalculator", ->
       # another calculation after resize won't change nothing
       expect(calc.calcDimensions dim(0, 0, 300, 500), newDim).toBe null
 
+  describe "when window is resized manually", ->
+
+    it "accepts the new size", ->
+      calc = new FoldCalculator dim(0, 0, 300, 500), dim(200, 100, 300, 500)
+
+      # resize the window from top left
+      windowDim = dim(280, 130, 220, 470)
+      newDim = calc.calcDimensions dim(0, 0, 220, 470), windowDim
+      expect(newDim).toBe null
+
+      # open panel to the left
+      newDim = calc.calcDimensions dim(100, 0, 120, 470), windowDim
+      expect(newDim).toEqual dim(180, 130, 320, 470)
+
 dim = (x, y, width, height) ->
   {x, y, width, height}
