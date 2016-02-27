@@ -1,7 +1,7 @@
 {
   "name": "window-fold",
   "main": "./lib/window-fold",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Keeps the text area at the same size when panels are opened or closed.",
   "keywords": [
   ],
@@ -9,7 +9,7 @@
     "atom-workspace": "window-fold:toggle"
   },
   "repository": "https://github.com/cnaj/window-fold",
-  "license": "MIT",
+  "license": "BSD-3-Clause",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
   },
